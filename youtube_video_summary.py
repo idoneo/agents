@@ -38,7 +38,8 @@ def get_video_transcript(video_id):
 
 def display_video_summaries(videos):
     for video in videos:
-        st.subheader(video['title'])
+        video_url = f"https://www.youtube.com/watch?v={video['video_id']}"
+        st.markdown(f"### [{video['title']}]({video_url}){{:target="_blank"}}")
         st.markdown(video['overview'])
 
 def save_to_markdown(videos):
