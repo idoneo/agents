@@ -42,7 +42,9 @@ def display_video_summaries(videos):
         st.write(video['overview'])
 
 def save_to_markdown(videos):
-    with open('video_summaries.md', 'w') as f:
+    export_dir = 'export'
+    os.makedirs(export_dir, exist_ok=True)
+    with open(f'{export_dir}/video_summaries.md', 'w') as f:
         for video in videos:
             f.write(f"## {video['title']}\n\n")
             f.write(f"{video['overview']}\n\n")
