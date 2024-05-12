@@ -89,6 +89,7 @@ venv/
 ENV/
 env/
 .env
+.env
 .venv-*
 
 # Spyder project settings
