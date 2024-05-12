@@ -56,8 +56,10 @@ def display_video_summaries(videos):
     for video in videos:
         video_url = f"https://www.youtube.com/watch?v={video['video_id']}"
         published_time = humanize.naturaltime(datetime.now(timezone.utc) - isodate.parse_datetime(video['published_at']))
+        duration = isodate.parse_duration(video['duration'])
+        human_readable_duration = str(duration).split('.')[0]  # Remove microseconds
         st.markdown(f"Published by **{video['channel_title']}** {published_time}")
-        st.markdown(f"Duration: **{video['duration']}**")
+        st.markdown(f"Duration: **{human_readable_duration}**")
         st.markdown(f'<h3><a href="{video_url}" target="_blank">{video["title"]}</a></h3>', unsafe_allow_html=True)
         st.markdown(video['overview'])
 
@@ -68,8 +70,10 @@ def save_to_markdown(videos):
         for video in videos:
             video_url = f"https://www.youtube.com/watch?v={video['video_id']}"
             published_time = humanize.naturaltime(datetime.now(timezone.utc) - isodate.parse_datetime(video['published_at']))
+            duration = isodate.parse_duration(video['duration'])
+            human_readable_duration = str(duration).split('.')[0]  # Remove microseconds
             f.write(f"Published by **{video['channel_title']}** {published_time}\n")
-            f.write(f"Duration: **{video['duration']}**\n")
+            f.write(f"Duration: **{human_readable_duration}**\n")
             f.write(f"## [{video['title']}]({video_url})\n\n")
             f.write(f"{video['overview']}\n\n")
 
