@@ -26,19 +26,22 @@ def get_top_videos_by_views(subject, max_results=5):
     for search_result in search_response.get('items', []):
         video_id = search_result['id']['videoId']
         video_details = youtube.videos().list(
-            part='snippet,contentDetails',
+            part='snippet,contentDetails,statistics',
             id=video_id
         ).execute().get('items', [])[0]
 
         published_at = video_details['snippet']['publishedAt']
         channel_title = video_details['snippet']['channelTitle']
         duration = video_details['contentDetails']['duration']
+        view_count = video_details['statistics']['viewCount']
 
         videos.append({
             'title': search_result['snippet']['title'],
             'video_id': video_id,
             'published_at': published_at,
             'channel_title': channel_title,
+            'duration': duration,
+            'view_count': view_count
             'duration': duration
         })
     return videos
@@ -58,8 +61,10 @@ def display_video_summaries(videos):
         published_time = humanize.naturaltime(datetime.now(timezone.utc) - isodate.parse_datetime(video['published_at']))
         duration = isodate.parse_duration(video['duration'])
         human_readable_duration = str(duration).split('.')[0]  # Remove microseconds
+        views = humanize.intcomma(int(video['view_count']))
         st.markdown(f"Published by **{video['channel_title']}** {published_time}")
         st.markdown(f"Duration: **{human_readable_duration}**")
+        st.markdown(f"Views: **{views}**")
         st.markdown(f'<h3><a href="{video_url}" target="_blank">{video["title"]}</a></h3>', unsafe_allow_html=True)
         st.markdown(video['overview'])
 
@@ -72,8 +77,10 @@ def save_to_markdown(videos):
             published_time = humanize.naturaltime(datetime.now(timezone.utc) - isodate.parse_datetime(video['published_at']))
             duration = isodate.parse_duration(video['duration'])
             human_readable_duration = str(duration).split('.')[0]  # Remove microseconds
+            views = humanize.intcomma(int(video['view_count']))
             f.write(f"Published by **{video['channel_title']}** {published_time}\n")
             f.write(f"Duration: **{human_readable_duration}**\n")
+            f.write(f"Views: **{views}**\n")
             f.write(f"## [{video['title']}]({video_url})\n\n")
             f.write(f"{video['overview']}\n\n")
 
