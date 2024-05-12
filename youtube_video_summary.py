@@ -1,5 +1,4 @@
-import os
-import markdown
+import streamlit as st
 from googleapiclient.discovery import build
 from youtube_transcript_api import YouTubeTranscriptApi
 
@@ -34,14 +33,24 @@ def get_video_transcript(video_id):
         print(f'An error occurred while fetching transcript: {e}')
         return None
 
-def save_to_markdown(videos, filename='video_summaries.md'):
-    with open(filename, 'w') as file:
-        for video in videos:
-            file.write(f"## {video['title']}\n\n")
-            file.write(f"{video['overview']}\n\n")
+def display_video_summaries(videos):
+    for video in videos:
+        st.subheader(video['title'])
+        st.write(video['overview'])
 
 def main():
-    subject = input('Enter the subject to search on YouTube: ')
+    st.title('YouTube Video Summary')
+    subject = st.text_input('Enter the subject to search on YouTube:', '')
+    if subject:
+        with st.spinner('Fetching top videos...'):
+            top_videos = get_top_videos_by_views(subject)
+
+        for video in top_videos:
+            transcript = get_video_transcript(video['video_id'])
+            if transcript:
+                video['overview'] = transcript[:500] + '...'  # Taking the first 500 characters for a brief overview
+
+        display_video_summaries(top_videos)
     top_videos = get_top_videos_by_views(subject)
 
     for video in top_videos:
@@ -53,4 +62,5 @@ def main():
     print(f"Video summaries have been saved to 'video_summaries.md'")
 
 if __name__ == '__main__':
+    st.set_page_config(page_title="YouTube Video Summary", page_icon=":clapper:", layout="wide")
     main()
