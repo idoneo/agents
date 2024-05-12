@@ -41,7 +41,6 @@ def get_top_videos_by_views(subject, max_results=5):
             'published_at': published_at,
             'channel_title': channel_title,
             'duration': duration,
-            'view_count': view_count
             'view_count': view_count,
         })
     return videos
