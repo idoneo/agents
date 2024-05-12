@@ -21,9 +21,22 @@ def get_top_videos_by_views(subject, max_results=5):
 
     videos = []
     for search_result in search_response.get('items', []):
+        video_id = search_result['id']['videoId']
+        video_details = youtube.videos().list(
+            part='snippet,contentDetails',
+            id=video_id
+        ).execute().get('items', [])[0]
+
+        published_at = video_details['snippet']['publishedAt']
+        channel_title = video_details['snippet']['channelTitle']
+        duration = video_details['contentDetails']['duration']
+
         videos.append({
             'title': search_result['snippet']['title'],
-            'video_id': search_result['id']['videoId']
+            'video_id': video_id,
+            'published_at': published_at,
+            'channel_title': channel_title,
+            'duration': duration
         })
     return videos
 
@@ -39,6 +52,9 @@ def get_video_transcript(video_id):
 def display_video_summaries(videos):
     for video in videos:
         video_url = f"https://www.youtube.com/watch?v={video['video_id']}"
+        published_time = humanize.naturaltime(datetime.now(timezone.utc) - isodate.parse_datetime(video['published_at']))
+        st.markdown(f"Published by **{video['channel_title']}** {published_time}")
+        st.markdown(f"Duration: **{video['duration']}**")
         st.markdown(f'<h3><a href="{video_url}" target="_blank">{video["title"]}</a></h3>', unsafe_allow_html=True)
         st.markdown(video['overview'])
 
@@ -48,6 +64,9 @@ def save_to_markdown(videos):
     with open(f'{export_dir}/video_summaries.md', 'w') as f:
         for video in videos:
             video_url = f"https://www.youtube.com/watch?v={video['video_id']}"
+            published_time = humanize.naturaltime(datetime.now(timezone.utc) - isodate.parse_datetime(video['published_at']))
+            f.write(f"Published by **{video['channel_title']}** {published_time}\n")
+            f.write(f"Duration: **{video['duration']}**\n")
             f.write(f"## [{video['title']}]({video_url})\n\n")
             f.write(f"{video['overview']}\n\n")
 
