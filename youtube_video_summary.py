@@ -41,6 +41,12 @@ def display_video_summaries(videos):
         st.subheader(video['title'])
         st.write(video['overview'])
 
+def save_to_markdown(videos):
+    with open('video_summaries.md', 'w') as f:
+        for video in videos:
+            f.write(f"## {video['title']}\n\n")
+            f.write(f"{video['overview']}\n\n")
+
 def main():
     st.title('YouTube Video Summary')
     subject = st.text_input('Enter the subject to search on YouTube:', '')
@@ -54,15 +60,8 @@ def main():
                 video['overview'] = transcript[:500] + '...'  # Taking the first 500 characters for a brief overview
 
         display_video_summaries(top_videos)
-    top_videos = get_top_videos_by_views(subject)
-
-    for video in top_videos:
-        transcript = get_video_transcript(video['video_id'])
-        if transcript:
-            video['overview'] = transcript[:500] + '...'  # Taking the first 500 characters for a brief overview
-
-    save_to_markdown(top_videos)
-    print(f"Video summaries have been saved to 'video_summaries.md'")
+        save_to_markdown(top_videos)
+        st.success("Video summaries have been saved to 'video_summaries.md'")
 
 if __name__ == '__main__':
     st.set_page_config(page_title="YouTube Video Summary", page_icon=":clapper:", layout="wide")
