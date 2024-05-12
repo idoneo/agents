@@ -55,12 +55,12 @@ def main():
     if subject:
         with st.spinner('Fetching top videos...'):
             top_videos = get_top_videos_by_views(subject)
-
-        for video in top_videos:
-            transcript = get_video_transcript(video['video_id'])
-            if transcript:
-                video['overview'] = transcript[:500] + '...'  # Taking the first 500 characters for a brief overview
-
+            for video in top_videos:
+                transcript = get_video_transcript(video['video_id'])
+                if transcript:
+                    video['overview'] = transcript[:500] + '...'  # Taking the first 500 characters for a brief overview
+                else:
+                    video['overview'] = 'No transcript available...'
         display_video_summaries(top_videos)
         save_to_markdown(top_videos)
         st.success("Video summaries have been saved to 'video_summaries.md'")
