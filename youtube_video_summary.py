@@ -42,7 +42,7 @@ def get_top_videos_by_views(subject, max_results=5):
             'channel_title': channel_title,
             'duration': duration,
             'view_count': view_count
-            'duration': duration
+            'view_count': view_count,
         })
     return videos
 
