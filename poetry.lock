@@ -1300,6 +1300,20 @@ torch = ["safetensors", "torch"]
 typing = ["types-PyYAML", "types-requests", "types-simplejson", "types-toml", "types-tqdm", "types-urllib3", "typing-extensions (>=4.8.0)"]
 
 [[package]]
+name = "humanize"
+version = "4.9.0"
+description = "Python humanize utilities"
+optional = false
+python-versions = ">=3.8"
+files = [
+    {file = "humanize-4.9.0-py3-none-any.whl", hash = "sha256:ce284a76d5b1377fd8836733b983bfb0b76f1aa1c090de2566fcf008d7f6ab16"},
+    {file = "humanize-4.9.0.tar.gz", hash = "sha256:582a265c931c683a7e9b8ed9559089dea7edcf6cc95be39a3cbc2c5d5ac2bcfa"},
+]
+
+[package.extras]
+tests = ["freezegun", "pytest", "pytest-cov"]
+
+[[package]]
 name = "idna"
 version = "3.7"
 description = "Internationalized Domain Names in Applications (IDNA)"
@@ -1339,6 +1353,20 @@ files = [
     {file = "iniconfig-2.0.0-py3-none-any.whl", hash = "sha256:b6a85871a79d2e3b22d2d1b94ac2824226a63c6b741c88f7ae975f18b6778374"},
     {file = "iniconfig-2.0.0.tar.gz", hash = "sha256:2d91e135bf72d31a410b17c16da610a82cb55f6b0477d1a902134b24a455b8b3"},
 ]
+
+[[package]]
+name = "isodate"
+version = "0.6.1"
+description = "An ISO 8601 date/time/duration parser and formatter"
+optional = false
+python-versions = "*"
+files = [
+    {file = "isodate-0.6.1-py2.py3-none-any.whl", hash = "sha256:0751eece944162659049d35f4f549ed815792b38793f07cf73381c1c87cbed96"},
+    {file = "isodate-0.6.1.tar.gz", hash = "sha256:48c5881de7e8b0a0d648cb024c8062dc84e7b840ed81e864c7614fd3c127bde9"},
+]
+
+[package.dependencies]
+six = "*"
 
 [[package]]
 name = "jinja2"
@@ -3531,6 +3559,20 @@ idna = ">=2.0"
 multidict = ">=4.0"
 
 [[package]]
+name = "youtube-transcript-api"
+version = "0.6.2"
+description = "This is an python API which allows you to get the transcripts/subtitles for a given YouTube video. It also works for automatically generated subtitles, supports translating subtitles and it does not require a headless browser, like other selenium based solutions do!"
+optional = false
+python-versions = "*"
+files = [
+    {file = "youtube_transcript_api-0.6.2-py3-none-any.whl", hash = "sha256:019dbf265c6a68a0591c513fff25ed5a116ce6525832aefdfb34d4df5567121c"},
+    {file = "youtube_transcript_api-0.6.2.tar.gz", hash = "sha256:cad223d7620633cec44f657646bffc8bbc5598bd8e70b1ad2fa8277dec305eb7"},
+]
+
+[package.dependencies]
+requests = "*"
+
+[[package]]
 name = "zipp"
 version = "3.18.1"
 description = "Backport of pathlib-compatible object wrapper for zip files"
@@ -3548,4 +3590,4 @@ testing = ["big-O", "jaraco.functools", "jaraco.itertools", "more-itertools", "p
 [metadata]
 lock-version = "2.0"
 python-versions = ">=3.10.6,<3.12"
-content-hash = "5e5be2fd2d386301d709bf75f6fd4b3fdc10ff91ab6cb7567d54ea03bf69550c"
+content-hash = "164ef2cfa517479b4aadc1a64f9ff9176fd59a2170430162be57d0c004402fe4"

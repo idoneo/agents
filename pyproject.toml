@@ -17,6 +17,9 @@ requests = "*"
 pymongo = "*"
 streamlit = "*"
 
+youtube-transcript-api = "^0.6.2"
+isodate = "^0.6.1"
+humanize = "^4.9.0"
 [tool.poetry.dev-dependencies]
 pytest = "^6.2.5"
 
