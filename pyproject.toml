@@ -1,0 +1,32 @@
+[tool.poetry]
+name = "agent-dev"
+version = "0.1.0"
+description = ""
+authors = ["MC mconcordia@gunder.com"]
+license = "MIT"
+
+[tool.poetry.dependencies]
+python = ">=3.10.6,<3.12"
+python-dotenv = "*"
+pyautogen = "*"
+pandas = "*"
+aider-chat = "*"
+numpy = "*"
+openai = "*"
+requests = "*"
+pymongo = "*"
+streamlit = "*"
+
+[tool.poetry.dev-dependencies]
+pytest = "^6.2.5"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.poetry.scripts]
+#start = "streamlit run your_script.py"  # Modify with actual Streamlit script path if needed.
+
+[tool.vscode]
+pythonPath = "repos/poetry-repos/.venv-poet/bin/python"
+
