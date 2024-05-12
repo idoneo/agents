@@ -52,7 +52,8 @@ def save_to_markdown(videos):
 def main():
     st.title('YouTube Video Summary')
     subject = st.text_input('Enter the subject to search on YouTube:', '')
-    if subject:
+    submit_button = st.button('Search')
+    if submit_button and subject:
         with st.spinner('Fetching top videos...'):
             top_videos = get_top_videos_by_views(subject)
             for video in top_videos:
