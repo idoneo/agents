@@ -2,7 +2,7 @@ import streamlit as st
 import os
 import humanize
 import isodate
-from datetime import datetime
+from datetime import datetime, timezone
 from dotenv import load_dotenv
 from googleapiclient.discovery import build
 from youtube_transcript_api import YouTubeTranscriptApi
