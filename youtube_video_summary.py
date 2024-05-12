@@ -1,8 +1,10 @@
 import streamlit as st
+from dotenv import load_dotenv
 from googleapiclient.discovery import build
 from youtube_transcript_api import YouTubeTranscriptApi
 
-YOUTUBE_API_KEY = 'YOUR_YOUTUBE_API_KEY'  # Replace with your YouTube Data API v3 key
+load_dotenv()  # Load environment variables from a .env file
+YOUTUBE_API_KEY = os.getenv('YOUTUBE_API_KEY')
 YOUTUBE_API_SERVICE_NAME = 'youtube'
 YOUTUBE_API_VERSION = 'v3'
 
