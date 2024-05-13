@@ -7,6 +7,7 @@ from youtube_transcript_api import YouTubeTranscriptApi
 
 YOUTUBE_API_SERVICE_NAME = 'youtube'
 YOUTUBE_API_VERSION = 'v3'
+YOUTUBE_API_KEY = os.getenv('YOUTUBE_API_KEY')
 
 def streamlit_interface():
     st.title('YouTube Tutorial Extractor')
