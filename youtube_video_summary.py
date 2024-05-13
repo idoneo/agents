@@ -100,9 +100,9 @@ def main():
                     video['overview'] = 'No transcript available...'
         display_video_summaries(top_videos)
         filename = save_to_markdown(top_videos, subject)
-        st.success(f"Video summaries have been saved to '{filename}'")
-        filename = save_to_markdown(top_videos, subject)
-        st.success(f"Video summaries have been saved to '{filename}'")
+        print(filename)
+        st.success(f"Video summaries have been saved to {filename}")
+
 
 if __name__ == '__main__':
     st.set_page_config(page_title="YouTube Video Summary", page_icon=":clapper:", layout="wide")
