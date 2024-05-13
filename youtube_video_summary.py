@@ -67,7 +67,7 @@ def display_video_summaries(videos):
         st.markdown(f'<h3><a href="{video_url}" target="_blank">{video["title"]}</a></h3>', unsafe_allow_html=True)
         st.markdown(video['overview'])
 
-def save_to_markdown(videos):
+def save_to_markdown(videos, subject):
     export_dir = 'export'
     os.makedirs(export_dir, exist_ok=True)
     current_date = datetime.now().strftime("%Y-%m-%d")
