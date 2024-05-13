@@ -27,8 +27,6 @@ pytest = "^6.2.5"
 requires = ["poetry-core>=1.0.0"]
 build-backend = "poetry.core.masonry.api"
 
-[tool.poetry.scripts]
-start = "streamlit run youtube_video_summary.py"  # Entry point for the Streamlit application
 
 [tool.vscode]
 pythonPath = "repos/poetry-repos/.venv-poet/bin/python"
