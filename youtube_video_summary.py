@@ -99,7 +99,7 @@ def main():
                 else:
                     video['overview'] = 'No transcript available...'
         display_video_summaries(top_videos)
-        save_to_markdown(top_videos, subject)
+        filename = save_to_markdown(top_videos, subject)
         st.success(f"Video summaries have been saved to '{filename}'")
         st.success("Video summaries have been saved to 'video_summaries.md'")
 
