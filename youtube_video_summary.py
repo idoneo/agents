@@ -87,7 +87,7 @@ def save_to_markdown(videos, subject):
     return filename
 
 def main():
-    st.title('YouTube Video Summary')
+    st.title('Fetch YouTube Videos')
     subject = st.text_input('Enter the subject to search on YouTube:', '')
     submit_button = st.button('Search')
     if submit_button and subject:
@@ -109,5 +109,5 @@ def main():
 
 
 if __name__ == '__main__':
-    st.set_page_config(page_title="YouTube Video Summary", page_icon=":clapper:", layout="wide")
+    st.set_page_config(page_title="Fetch YouTube Videos", page_icon=":clapper:", layout="wide")
     main()
