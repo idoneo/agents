@@ -70,7 +70,9 @@ def display_video_summaries(videos):
 def save_to_markdown(videos):
     export_dir = 'export'
     os.makedirs(export_dir, exist_ok=True)
-    with open(f'{export_dir}/video_summaries.md', 'w') as f:
+    current_date = datetime.now().strftime("%Y-%m-%d")
+    filename = f"{subject}_{current_date}_video_summaries.md".replace(" ", "_")
+    with open(f'{export_dir}/{filename}', 'w') as f:
         for video in videos:
             video_url = f"https://www.youtube.com/watch?v={video['video_id']}"
             published_time = humanize.naturaltime(datetime.now(timezone.utc) - isodate.parse_datetime(video['published_at']))
@@ -97,7 +99,8 @@ def main():
                 else:
                     video['overview'] = 'No transcript available...'
         display_video_summaries(top_videos)
-        save_to_markdown(top_videos)
+        save_to_markdown(top_videos, subject)
+        st.success(f"Video summaries have been saved to '{filename}'")
         st.success("Video summaries have been saved to 'video_summaries.md'")
 
 if __name__ == '__main__':
