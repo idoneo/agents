@@ -1,6 +1,16 @@
 import re
 import sys
+import streamlit as st
 from youtube_transcript_api import YouTubeTranscriptApi
+
+def streamlit_interface():
+    st.title('YouTube Tutorial Extractor')
+    youtube_url = st.text_input('Enter the YouTube URL:', '')
+    extract_button = st.button('Extract Tutorial Steps')
+
+    if extract_button and youtube_url:
+        with st.spinner('Extracting tutorial steps...'):
+            main(youtube_url)
 
 def extract_video_id(url):
     """
@@ -35,12 +45,12 @@ def process_transcript(transcript):
 def main(url):
     video_id = extract_video_id(url)
     if not video_id:
-        print("Invalid YouTube URL.")
+        st.error("Invalid YouTube URL.")
         return
 
     transcript = fetch_transcript(video_id)
     if not transcript:
-        print("No transcript available for this video.")
+        st.error("No transcript available for this video.")
         return
 
     steps = process_transcript(transcript)
@@ -58,9 +68,9 @@ def main(url):
                 f.write("## Steps\n")
                 for step in steps:
                     f.write(f"- {step}\n")
-            print(f"Tutorial steps have been saved to '{filename}'")
+            st.success(f"Tutorial steps have been saved to '{filename}'")
     else:
-        print("No steps could be extracted from the transcript.")
+        st.warning("No steps could be extracted from the transcript.")
 
 def fetch_video_details(video_id):
     youtube = build(YOUTUBE_API_SERVICE_NAME, YOUTUBE_API_VERSION, developerKey=YOUTUBE_API_KEY)
@@ -75,8 +85,5 @@ def fetch_video_details(video_id):
     }
 
 if __name__ == "__main__":
-    if len(sys.argv) < 2:
-        print("Usage: python youtube_tutorial_extractor.py <YouTube URL>")
-        sys.exit(1)
-    youtube_url = sys.argv[1]
-    main(youtube_url)
+    st.set_page_config(page_title="YouTube Tutorial Extractor", page_icon=":clapper:", layout="wide")
+    streamlit_interface()
