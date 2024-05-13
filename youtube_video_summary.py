@@ -84,6 +84,7 @@ def save_to_markdown(videos, subject):
             f.write(f"Views: **{views}**\n")
             f.write(f"## [{video['title']}]({video_url})\n\n")
             f.write(f"{video['overview']}\n\n")
+    return filename
 
 def main():
     st.title('YouTube Video Summary')
@@ -100,6 +101,7 @@ def main():
                     videos_with_transcripts.append(video)
             if videos_with_transcripts:
                 display_video_summaries(videos_with_transcripts)
+                filename = save_to_markdown(videos_with_transcripts, subject)
                 filename = save_to_markdown(videos_with_transcripts, subject)
                 st.success(f"Video summaries have been saved to '{filename}'")
             else:
