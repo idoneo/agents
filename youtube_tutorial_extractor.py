@@ -30,17 +30,12 @@ def fetch_transcript(video_id):
         print(f'An error occurred while fetching transcript: {e}')
         return None
 
-def process_transcript(transcript):
+def summarize_transcript(transcript):
     """
-    Processes the transcript to extract step-by-step instructions or bullet points.
+    Summarizes the transcript by concatenating all text entries.
     """
-    steps = []
-    for entry in transcript:
-        text = entry['text']
-        # Simple heuristic: if a line starts with a number or a bullet point, consider it a step
-        if re.match(r"^\d+\.|\*", text):
-            steps.append(text)
-    return steps
+    summary = ' '.join([entry['text'] for entry in transcript])
+    return summary
 
 def main(url):
     video_id = extract_video_id(url)
@@ -53,8 +48,8 @@ def main(url):
         st.error("No transcript available for this video.")
         return
 
-    steps = process_transcript(transcript)
-    if steps:
+    summary = summarize_transcript(transcript)
+    if summary:
         video_details = fetch_video_details(video_id)
         if video_details:
             title = video_details['title']
@@ -65,9 +60,8 @@ def main(url):
             os.makedirs(export_dir, exist_ok=True)
             with open(os.path.join(export_dir, filename), 'w') as f:
                 f.write(f"# {title} Tutorial\n\n")
-                f.write("## Steps\n")
-                for step in steps:
-                    f.write(f"- {step}\n")
+                f.write("## Summary\n")
+                f.write(summary)
             st.success(f"Tutorial steps have been saved to '{filename}'")
     else:
         st.warning("No steps could be extracted from the transcript.")
