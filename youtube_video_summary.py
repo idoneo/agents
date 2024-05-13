@@ -104,10 +104,6 @@ def main():
                 st.success(f"Video summaries have been saved to '{filename}'")
             else:
                 st.error('No videos with transcripts were found.')
-        display_video_summaries(top_videos)
-        filename = save_to_markdown(top_videos, subject)
-        print(filename)
-        st.success(f"Video summaries have been saved to {filename}")
 
 
 if __name__ == '__main__':
