@@ -1,8 +1,12 @@
 import re
 import sys
 import streamlit as st
+import os
 from googleapiclient.discovery import build
 from youtube_transcript_api import YouTubeTranscriptApi
+
+YOUTUBE_API_SERVICE_NAME = 'youtube'
+YOUTUBE_API_VERSION = 'v3'
 
 def streamlit_interface():
     st.title('YouTube Tutorial Extractor')
