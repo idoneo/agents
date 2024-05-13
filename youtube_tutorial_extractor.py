@@ -45,11 +45,34 @@ def main(url):
 
     steps = process_transcript(transcript)
     if steps:
-        print("Extracted Steps:")
-        for step in steps:
-            print(f"- {step}")
+        video_details = fetch_video_details(video_id)
+        if video_details:
+            title = video_details['title']
+            sanitized_title = re.sub(r'[^\w\s-]', '', title).replace(' ', '_')
+            current_date = datetime.now().strftime("%Y-%m-%d")
+            filename = f"{current_date}_{sanitized_title}_tutorial.md"
+            export_dir = 'export'
+            os.makedirs(export_dir, exist_ok=True)
+            with open(os.path.join(export_dir, filename), 'w') as f:
+                f.write(f"# {title} Tutorial\n\n")
+                f.write("## Steps\n")
+                for step in steps:
+                    f.write(f"- {step}\n")
+            print(f"Tutorial steps have been saved to '{filename}'")
     else:
         print("No steps could be extracted from the transcript.")
+
+def fetch_video_details(video_id):
+    youtube = build(YOUTUBE_API_SERVICE_NAME, YOUTUBE_API_VERSION, developerKey=YOUTUBE_API_KEY)
+    video_response = youtube.videos().list(
+        part='snippet',
+        id=video_id
+    ).execute()
+
+    video_details = video_response.get('items', [])[0]['snippet']
+    return {
+        'title': video_details['title']
+    }
 
 if __name__ == "__main__":
     if len(sys.argv) < 2:
