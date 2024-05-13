@@ -92,12 +92,18 @@ def main():
     if submit_button and subject:
         with st.spinner('Fetching top videos...'):
             top_videos = get_top_videos_by_views(subject)
+            videos_with_transcripts = []
             for video in top_videos:
                 transcript = get_video_transcript(video['video_id'])
-                if transcript:
+                if transcript and 'No transcript available...' not in transcript:
                     video['overview'] = transcript[:500] + '...'  # Taking the first 500 characters for a brief overview
-                else:
-                    video['overview'] = 'No transcript available...'
+                    videos_with_transcripts.append(video)
+            if videos_with_transcripts:
+                display_video_summaries(videos_with_transcripts)
+                filename = save_to_markdown(videos_with_transcripts, subject)
+                st.success(f"Video summaries have been saved to '{filename}'")
+            else:
+                st.error('No videos with transcripts were found.')
         display_video_summaries(top_videos)
         filename = save_to_markdown(top_videos, subject)
         print(filename)
